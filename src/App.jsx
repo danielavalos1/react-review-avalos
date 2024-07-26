@@ -28,18 +28,19 @@ function App() {
 
 
   return (
-    <Layout>
-      <Screen>
-        {user ? (
+    <>
+
+      {
+        user ? (
           <AuthenticatedApp />
         ) : (
           <UnAuthenticatedApp
             onLogin={handleLogin}
             onSignup={handleSignup}
           />
-        )}
-      </Screen>
-    </Layout>
+        )
+      }
+    </>
   )
 }
 
