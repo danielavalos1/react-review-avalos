@@ -6,20 +6,29 @@ import { PokemonData } from '../components/PokemonData';
 
 export const SearchPage = () => {
   const [query, setQuery] = useState('');
-  const [pokemon, setPokemon] = useState(null);
-  const [error, setError] = useState(null);
+  const [state, setState] = useState({
+    status: "idle", //success, error, pending
+    data: null,
+    error: null,
+  });
+
+  const { status, data: pokemon, error } = state;
   const handleSubmit = (e) => {
     e.preventDefault();
     getPokemon(query)
       .then(data => {
-        console.log(data);
-        setPokemon(data);
-        setError(null);
+        setState({
+          status: "success",
+          data: data,
+          error: null
+        })
       })
-      .catch(error => {
-        console.log(error);
-        setError("El pokemon no existe! Intenta de nuevo");
-        setPokemon(null);
+      .catch(_error => {
+        setState({
+          status: "error",
+          data: null,
+          error: "El pokemon no existe! Intenta de nuevo"
+        })
       });
   }
   return (
@@ -34,9 +43,9 @@ export const SearchPage = () => {
         />
         <button>Search</button>
       </form>
-      {!pokemon && !error && "Ready to search"}
-      {pokemon && <PokemonData pokemon={pokemon} />}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {status === "idle" && "Ready to search"}
+      {status === "success" && <PokemonData pokemon={pokemon} />}
+      {status === "error" && <p style={{ color: "red" }}>{error}</p>}
     </div>
 
   )
