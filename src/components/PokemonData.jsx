@@ -33,7 +33,7 @@ const FavoriteButton = styled.button`
   }
 `
 
-export const PokemonData = ({ pokemon, onAddFavorite, isFavorite = false }) => {
+export const PokemonData = ({ pokemon, onAddFavorite, isFavorite = false, onRemoveFavorite }) => {
 
   const regularContent = (
     <>
@@ -62,7 +62,7 @@ export const PokemonData = ({ pokemon, onAddFavorite, isFavorite = false }) => {
       }
       <p>Height: {pokemon.height / 10} m</p>
       <p>Weight: {pokemon.weight / 10} kg</p>
-      <FavoriteButton onClick={onAddFavorite}>
+      <FavoriteButton onClick={isFavorite ? onRemoveFavorite : onAddFavorite}>
         {isFavorite ? favoriteContent : regularContent}
       </FavoriteButton>
     </div>
@@ -72,5 +72,6 @@ export const PokemonData = ({ pokemon, onAddFavorite, isFavorite = false }) => {
 PokemonData.propTypes = {
   pokemon: PropTypes.object.isRequired,
   onAddFavorite: PropTypes.func.isRequired,
-  isFavorite: PropTypes.bool
+  isFavorite: PropTypes.bool,
+  onRemoveFavorite: PropTypes.func.isRequired,
 }

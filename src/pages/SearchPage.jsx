@@ -3,7 +3,7 @@ import { Input } from "../components/Input"
 import { useEffect, useState } from "react"
 import { getPokemon } from "../services/pokeapi-service";
 import { PokemonData } from '../components/PokemonData';
-import { createFavorite } from "../services/favorites-services";
+import { createFavorite, removeFavorite } from "../services/favorites-services";
 
 export const SearchPage = () => {
   const [query, setQuery] = useState('');
@@ -25,7 +25,7 @@ export const SearchPage = () => {
           error: null
         })
       })
-      .catch(_error => {
+      .catch(() => {
         setState({
           status: "error",
           data: null,
@@ -44,6 +44,16 @@ export const SearchPage = () => {
     createFavorite(data)
       .then(newFavorite => setFavorites([...favorites, newFavorite]))
       .catch(error => console.log(error));
+  }
+
+  const handleRemoveFavorite = () => {
+    const favorite = favorites.find(favorite => favorite.pokemon_name === pokemon.name);
+
+    removeFavorite(favorite.id)
+      .then(() => {
+        const newFavorites = favorites.filter(pokeFavs => pokeFavs.pokemon_name !== pokemon.name);
+        setFavorites(newFavorites);
+      })
   }
 
   const isFavorite = favorites.find(pokeFav => pokeFav.pokemon_name === pokemon?.name) ? true : false;
@@ -65,7 +75,7 @@ export const SearchPage = () => {
         <button>Search</button>
       </form>
       {status === "idle" && "Ready to search"}
-      {status === "success" && <PokemonData onAddFavorite={handleAddFavorite} pokemon={pokemon} isFavorite={isFavorite} />}
+      {status === "success" && <PokemonData onAddFavorite={handleAddFavorite} pokemon={pokemon} isFavorite={isFavorite} onRemoveFavorite={handleRemoveFavorite} />}
       {status === "error" && <p style={{ color: "red" }}>{error}</p>}
     </div>
 
