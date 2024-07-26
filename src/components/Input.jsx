@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-export const Input = ({ name, id, label, onChange, placeholder, type = 'text', value }) => {
+export const Input = ({ name, id, label, onChange, placeholder, type = 'text', value, isRequired = false }) => {
   return (
     <div>
       {label && <label htmlFor={id || name}>{label}</label>}
@@ -11,6 +11,7 @@ export const Input = ({ name, id, label, onChange, placeholder, type = 'text', v
         placeholder={placeholder}
         onChange={onChange}
         value={value}
+        required={isRequired}
       />
     </div>
   )
@@ -23,5 +24,6 @@ Input.propTypes = {
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   type: PropTypes.string,
-  value: PropTypes.any
+  value: PropTypes.any,
+  isRequired: PropTypes.bool,
 };
