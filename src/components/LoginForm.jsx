@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { login } from '../services/auth-service';
 import { Input } from './Input';
+import PropTypes from 'prop-types'
 
-export const LoginForm = () => {
+export const LoginForm = ({ onLogin }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -10,9 +10,7 @@ export const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login(formData)
-      .then(user => console.log(user))
-      .then(error => console.log(error));
+    onLogin(formData);
   }
 
   const handleChange = (e) => {
@@ -43,4 +41,7 @@ export const LoginForm = () => {
       <button type="submit">Log In</button>
     </form>
   )
+}
+LoginForm.propTypes = {
+  onLogin: PropTypes.func.isRequired,
 }
