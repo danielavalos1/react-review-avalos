@@ -7,3 +7,11 @@ export const login = async (credentials) => {
   sessionStorage.setItem(tokenKey, token);
   return userProps;
 }
+
+export const logout = async () => {
+  const response = await apiFetch('/logout', { method: 'DELETE' });
+  if (response.ok) {
+    sessionStorage.removeItem(tokenKey);
+  }
+  return response;
+}
