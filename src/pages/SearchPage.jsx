@@ -17,6 +17,7 @@ export const SearchPage = () => {
   const { status, data: pokemon, error } = state;
   const handleSubmit = (e) => {
     e.preventDefault();
+    setState({ status: "pending", data: null, error: null });
     getPokemon(query)
       .then(data => {
         setState({
@@ -74,6 +75,7 @@ export const SearchPage = () => {
         />
         <button>Search</button>
       </form>
+      {status === 'pending' && 'Loading...'}
       {status === "idle" && "Ready to search"}
       {status === "success" && <PokemonData onAddFavorite={handleAddFavorite} pokemon={pokemon} isFavorite={isFavorite} onRemoveFavorite={handleRemoveFavorite} />}
       {status === "error" && <p style={{ color: "red" }}>{error}</p>}
