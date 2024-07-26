@@ -33,7 +33,20 @@ const FavoriteButton = styled.button`
   }
 `
 
-export const PokemonData = ({ pokemon }) => {
+export const PokemonData = ({ pokemon, onAddFavorite, isFavorite = false }) => {
+
+  const regularContent = (
+    <>
+      <RiStarFill color={colors.gray.light} /> Mark as favorite
+    </>
+  )
+
+  const favoriteContent = (
+    <>
+      <RiStarFill color={colors.yellow[500]} /> Remove Favorite
+    </>
+  )
+
   return (
     <div>
       <h2>{pokemon.name}</h2>
@@ -49,14 +62,15 @@ export const PokemonData = ({ pokemon }) => {
       }
       <p>Height: {pokemon.height / 10} m</p>
       <p>Weight: {pokemon.weight / 10} kg</p>
-      <FavoriteButton>
-        <RiStarFill color={colors.gray.light} />
-        Mark as favorite
+      <FavoriteButton onClick={onAddFavorite}>
+        {isFavorite ? favoriteContent : regularContent}
       </FavoriteButton>
     </div>
   )
 }
 
 PokemonData.propTypes = {
-  pokemon: PropTypes.object.isRequired
+  pokemon: PropTypes.object.isRequired,
+  onAddFavorite: PropTypes.func.isRequired,
+  isFavorite: PropTypes.bool
 }
