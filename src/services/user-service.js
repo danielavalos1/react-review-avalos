@@ -7,3 +7,10 @@ export const createUser = async (userData) => {
   sessionStorage.setItem(tokenKey, token);
   return userProps;
 }
+
+export const getUser = async () => {
+  const user = await apiFetch('/profile');
+  const { _token, ...userProps } = user;
+  //sessionStorage.setItem(tokenKey, _token);
+  return userProps;
+}
