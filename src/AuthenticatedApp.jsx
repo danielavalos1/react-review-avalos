@@ -1,8 +1,9 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Layout } from "./components/Layout"
 import { Screen } from "./components/Screen"
 import { SearchPage } from "./pages/SearchPage"
-import { createFavorite, removeFavorite } from "./services/favorites-services"
+import { FavoritePage } from './pages/FavoritePage'
+import { createFavorite, getFavorites, removeFavorite } from "./services/favorites-services"
 
 export const AuthenticatedApp = () => {
   const [favorites, setFavorites] = useState([]);
@@ -28,10 +29,21 @@ export const AuthenticatedApp = () => {
         setFavorites(newFavorites);
       })
   }
+
+  useEffect(() => {
+    getFavorites()
+      .then(data => setFavorites(data));
+  }, []);
+
+  useEffect(() => {
+    console.log(favorites)
+  }, [favorites]);
+
   return (
     <Layout>
       <Screen>
-        <SearchPage onAddFavorite={handleAddFavorite} onRemoveFavorite={handleRemoveFavorite} favorites={favorites} />
+        {/* <SearchPage onAddFavorite={handleAddFavorite} onRemoveFavorite={handleRemoveFavorite} favorites={favorites} /> */}
+        <FavoritePage favorites={favorites} />
       </Screen>
     </Layout>
   )

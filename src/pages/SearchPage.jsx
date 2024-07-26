@@ -1,5 +1,5 @@
 import { Input } from "../components/Input"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { getPokemon } from "../services/pokeapi-service";
 import { PokemonData } from '../components/PokemonData';
 import PropTypes from 'prop-types'
@@ -34,10 +34,6 @@ export const SearchPage = ({ favorites, onAddFavorite, onRemoveFavorite }) => {
   }
 
   const isFavorite = favorites.find(pokeFav => pokeFav.pokemon_name === pokemon?.name) ? true : false;
-
-  useEffect(() => {
-    console.log(favorites);
-  }, [favorites]);
 
   return (
     <div>
