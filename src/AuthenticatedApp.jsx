@@ -4,10 +4,11 @@ import { Screen } from "./components/Screen"
 import { SearchPage } from "./pages/SearchPage"
 import { FavoritePage } from './pages/FavoritePage'
 import { createFavorite, getFavorites, removeFavorite } from "./services/favorites-services";
-import { createBrowserRouter, RouterProvider, BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 
-export const AuthenticatedApp = () => {
+export const AuthenticatedApp = ({ onLogout }) => {
   const [favorites, setFavorites] = useState([]);
 
   const handleAddFavorite = (pokemon) => {
@@ -44,6 +45,7 @@ export const AuthenticatedApp = () => {
   return (
     <Layout>
       <Screen>
+        <button onClick={onLogout}>Log out</button>
         <BrowserRouter>
           <Routes>
             <Route
@@ -67,4 +69,8 @@ export const AuthenticatedApp = () => {
       </Screen>
     </Layout>
   )
+}
+
+AuthenticatedApp.propTypes = {
+  onLogout: PropTypes.func.isRequired
 }
