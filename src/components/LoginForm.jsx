@@ -40,7 +40,7 @@ export const LoginForm = () => {
         value={formData.password}
         onChange={handleChange}
       />
-      <button type="submit">Login</button>
+      <button type="submit">Log In</button>
     </form>
   )
 }
