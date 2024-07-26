@@ -1,0 +1,59 @@
+# Node modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+logs
+*.log
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+jspm_packages/
+bower_components/
+
+# Production build
+/build
+
+# Cache directories
+.cache/
+.tern-port
+.next/
+.nuxt/
+.sass-cache/
+.tmp/
+dist/
+
+# Coverage directories
+coverage/
+*.lcov
+
+# Yarn integrity
+.yarn-integrity
+
+# Environment variables
+.env
+.env.test
+.env.production
+.env.local
+.env.*.local
+
+# Miscellaneous
+.DS_Store
+*.pem
+*.key
+*.crt
+*.pfx
+
+# Editor directories and files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
