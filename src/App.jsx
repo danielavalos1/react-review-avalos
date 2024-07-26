@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { createUser, getUser } from "./services/user-service";
 import { UnAuthenticatedApp } from './UnAuthenticatedApp';
 import { AuthenticatedApp } from "./AuthenticatedApp";
-import { login } from "./services/auth-service";
+import { login, logout } from "./services/auth-service";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -25,13 +25,20 @@ function App() {
       .catch(error => console.log(error));
   }
 
+  const handleLogout = () => {
+    logout()
+      .then(() => {
+        setUser(null);
+      })
+      .catch(error => console.log(error));
+  }
 
   return (
     <>
 
       {
         user ? (
-          <AuthenticatedApp />
+          <AuthenticatedApp onLogout={handleLogout} />
         ) : (
           <UnAuthenticatedApp
             onLogin={handleLogin}
