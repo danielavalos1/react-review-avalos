@@ -7,11 +7,20 @@ import { PokemonData } from '../components/PokemonData';
 export const SearchPage = () => {
   const [query, setQuery] = useState('');
   const [pokemon, setPokemon] = useState(null);
+  const [error, setError] = useState(null);
   const handleSubmit = (e) => {
     e.preventDefault();
     getPokemon(query)
-      .then(data => setPokemon(data))
-      .catch(error => console.log(error));
+      .then(data => {
+        console.log(data);
+        setPokemon(data);
+        setError(null);
+      })
+      .catch(error => {
+        console.log(error);
+        setError("El pokemon no existe! Intenta de nuevo");
+        setPokemon(null);
+      });
   }
   return (
     <div>
@@ -21,12 +30,13 @@ export const SearchPage = () => {
           placeholder={'Pokemon Name'}
           value={query}
           onChange={e => setQuery(e.target.value)}
+          isRequired
         />
         <button>Search</button>
       </form>
-      {
-        pokemon ? <PokemonData pokemon={pokemon} /> : 'Ready to search'
-      }
+      {!pokemon && !error && "Ready to search"}
+      {pokemon && <PokemonData pokemon={pokemon} />}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
 
   )
