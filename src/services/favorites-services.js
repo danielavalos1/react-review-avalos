@@ -7,3 +7,7 @@ export const createFavorite = (data) => {
 export const removeFavorite = (id) => {
   return apiFetch(`/favorites/${id}`, { method: "DELETE" });
 }
+
+export const getFavorites = () => {
+  return apiFetch('/favorites');
+}
