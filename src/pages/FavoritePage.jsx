@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom';
 
 const typeColors = {
   bug: "#A8B820",
@@ -49,7 +50,7 @@ export const FavoritePage = ({ favorites }) => {
   return (
     <Wrapper>
       <h3>Favorites</h3>
-
+      <Link to='/'>Search</Link>
       <Favorites>
 
         {

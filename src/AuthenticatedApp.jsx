@@ -3,7 +3,9 @@ import { Layout } from "./components/Layout"
 import { Screen } from "./components/Screen"
 import { SearchPage } from "./pages/SearchPage"
 import { FavoritePage } from './pages/FavoritePage'
-import { createFavorite, getFavorites, removeFavorite } from "./services/favorites-services"
+import { createFavorite, getFavorites, removeFavorite } from "./services/favorites-services";
+import { createBrowserRouter, RouterProvider, BrowserRouter, Route, Routes } from "react-router-dom";
+
 
 export const AuthenticatedApp = () => {
   const [favorites, setFavorites] = useState([]);
@@ -42,8 +44,26 @@ export const AuthenticatedApp = () => {
   return (
     <Layout>
       <Screen>
-        {/* <SearchPage onAddFavorite={handleAddFavorite} onRemoveFavorite={handleRemoveFavorite} favorites={favorites} /> */}
-        <FavoritePage favorites={favorites} />
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <SearchPage
+                  favorites={favorites}
+                  onAddFavorite={handleAddFavorite}
+                  onRemoveFavorite={handleRemoveFavorite}
+                />
+              }
+            />
+            <Route
+              path="/favorites"
+              element={
+                <FavoritePage favorites={favorites} />
+              }
+            />
+          </Routes>
+        </BrowserRouter>
       </Screen>
     </Layout>
   )

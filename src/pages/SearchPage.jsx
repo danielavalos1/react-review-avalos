@@ -3,6 +3,7 @@ import { useState } from "react"
 import { getPokemon } from "../services/pokeapi-service";
 import { PokemonData } from '../components/PokemonData';
 import PropTypes from 'prop-types'
+import { Link } from "react-router-dom";
 
 export const SearchPage = ({ favorites, onAddFavorite, onRemoveFavorite }) => {
   const [query, setQuery] = useState('');
@@ -37,6 +38,7 @@ export const SearchPage = ({ favorites, onAddFavorite, onRemoveFavorite }) => {
 
   return (
     <div>
+      <Link to='/favorites'>Go to Favorites</Link>
       <form onSubmit={handleSubmit}>
         <Input
           name={'query'}
