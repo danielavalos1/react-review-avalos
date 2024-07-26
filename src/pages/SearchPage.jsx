@@ -1,13 +1,11 @@
-
 import { Input } from "../components/Input"
 import { useEffect, useState } from "react"
 import { getPokemon } from "../services/pokeapi-service";
 import { PokemonData } from '../components/PokemonData';
-import { createFavorite, removeFavorite } from "../services/favorites-services";
+import PropTypes from 'prop-types'
 
-export const SearchPage = () => {
+export const SearchPage = ({ favorites, onAddFavorite, onRemoveFavorite }) => {
   const [query, setQuery] = useState('');
-  const [favorites, setFavorites] = useState([]);
   const [state, setState] = useState({
     status: "idle", //success, error, pending
     data: null,
@@ -35,28 +33,6 @@ export const SearchPage = () => {
       });
   }
 
-  const handleAddFavorite = () => {
-    const data = {
-      pokemon_name: pokemon.name,
-      pokemon_id: pokemon.id,
-      pokemon_type: pokemon.types[0].type.name,
-      pokemon_avatar_url: pokemon.sprites.other['official-artwork'].front_default
-    };
-    createFavorite(data)
-      .then(newFavorite => setFavorites([...favorites, newFavorite]))
-      .catch(error => console.log(error));
-  }
-
-  const handleRemoveFavorite = () => {
-    const favorite = favorites.find(favorite => favorite.pokemon_name === pokemon.name);
-
-    removeFavorite(favorite.id)
-      .then(() => {
-        const newFavorites = favorites.filter(pokeFavs => pokeFavs.pokemon_name !== pokemon.name);
-        setFavorites(newFavorites);
-      })
-  }
-
   const isFavorite = favorites.find(pokeFav => pokeFav.pokemon_name === pokemon?.name) ? true : false;
 
   useEffect(() => {
@@ -77,9 +53,15 @@ export const SearchPage = () => {
       </form>
       {status === 'pending' && 'Loading...'}
       {status === "idle" && "Ready to search"}
-      {status === "success" && <PokemonData onAddFavorite={handleAddFavorite} pokemon={pokemon} isFavorite={isFavorite} onRemoveFavorite={handleRemoveFavorite} />}
+      {status === "success" && <PokemonData onAddFavorite={onAddFavorite} pokemon={pokemon} isFavorite={isFavorite} onRemoveFavorite={onRemoveFavorite} />}
       {status === "error" && <p style={{ color: "red" }}>{error}</p>}
     </div>
 
   )
+}
+
+SearchPage.propTypes = {
+  favorites: PropTypes.array.isRequired,
+  onAddFavorite: PropTypes.func.isRequired,
+  onRemoveFavorite: PropTypes.func.isRequired,
 }

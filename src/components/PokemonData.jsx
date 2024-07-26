@@ -62,7 +62,7 @@ export const PokemonData = ({ pokemon, onAddFavorite, isFavorite = false, onRemo
       }
       <p>Height: {pokemon.height / 10} m</p>
       <p>Weight: {pokemon.weight / 10} kg</p>
-      <FavoriteButton onClick={isFavorite ? onRemoveFavorite : onAddFavorite}>
+      <FavoriteButton onClick={() => isFavorite ? onRemoveFavorite(pokemon) : onAddFavorite(pokemon)}>
         {isFavorite ? favoriteContent : regularContent}
       </FavoriteButton>
     </div>
