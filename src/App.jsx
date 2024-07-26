@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { Layout } from "./components/Layout";
-import { Screen } from "./components/Screen";
 import { createUser, getUser } from "./services/user-service";
 import { UnAuthenticatedApp } from './UnAuthenticatedApp';
 import { AuthenticatedApp } from "./AuthenticatedApp";
@@ -8,6 +6,7 @@ import { login } from "./services/auth-service";
 
 function App() {
   const [user, setUser] = useState(null);
+
   useEffect(() => {
     getUser()
       .then(user => setUser(user))
