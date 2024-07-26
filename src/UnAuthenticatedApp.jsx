@@ -5,7 +5,6 @@ import { Screen } from "./components/Screen";
 import { SignUpForm } from './components/SignupForm';
 import styled from "@emotion/styled";
 import { colors } from "./styles";
-import PropTypes from 'prop-types'
 
 const CustomLink = styled.button`
 background: none;
@@ -16,7 +15,7 @@ cursor: pointer;
 }
 `;
 
-export const UnAuthenticatedApp = ({ onLogin, onSignup }) => {
+export const UnAuthenticatedApp = () => {
   const [showLogin, setShowLogin] = useState(true);
   const handleClick = e => {
     e.preventDefault();
@@ -27,15 +26,10 @@ export const UnAuthenticatedApp = ({ onLogin, onSignup }) => {
       <Screen>
         <h1>Welcome to Poke Collection</h1>
         {
-          showLogin ? <LoginForm onLogin={onLogin} /> : <SignUpForm onSignup={onSignup} />
+          showLogin ? <LoginForm /> : <SignUpForm />
         }
         <CustomLink onClick={handleClick}>{showLogin ? 'Create Account' : 'Log In'}</CustomLink>
       </Screen>
     </Layout>
   )
-}
-
-UnAuthenticatedApp.propTypes = {
-  onLogin: PropTypes.func.isRequired,
-  onSignup: PropTypes.func.isRequired,
 }

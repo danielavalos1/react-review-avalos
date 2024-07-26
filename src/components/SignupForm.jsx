@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { Input } from './Input';
-import PropTypes from 'prop-types'
-export const SignUpForm = ({ onSignup }) => {
+import { useAuth } from '../hooks/useAuth';
+export const SignUpForm = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     first_name: "",
     last_name: "",
   })
-
+  const { signup } = useAuth();
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSignup(formData);
+    signup(formData);
   }
 
   const handleChange = (e) => {
@@ -58,7 +58,4 @@ export const SignUpForm = ({ onSignup }) => {
       <button type="submit">Create Account</button>
     </form>
   )
-}
-SignUpForm.propTypes = {
-  onSignup: PropTypes.func.isRequired
 }

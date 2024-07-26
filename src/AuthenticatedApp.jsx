@@ -5,12 +5,12 @@ import { SearchPage } from "./pages/SearchPage"
 import { FavoritePage } from './pages/FavoritePage'
 import { createFavorite, getFavorites, removeFavorite } from "./services/favorites-services";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import PropTypes from 'prop-types';
+import { useAuth } from "./hooks/useAuth"
 
 
-export const AuthenticatedApp = ({ onLogout }) => {
+export const AuthenticatedApp = () => {
   const [favorites, setFavorites] = useState([]);
-
+  const { logout } = useAuth();
   const handleAddFavorite = (pokemon) => {
     const data = {
       pokemon_name: pokemon.name,
@@ -45,7 +45,7 @@ export const AuthenticatedApp = ({ onLogout }) => {
   return (
     <Layout>
       <Screen>
-        <button onClick={onLogout}>Log out</button>
+        <button onClick={logout}>Log out</button>
         <BrowserRouter>
           <Routes>
             <Route
@@ -69,8 +69,4 @@ export const AuthenticatedApp = ({ onLogout }) => {
       </Screen>
     </Layout>
   )
-}
-
-AuthenticatedApp.propTypes = {
-  onLogout: PropTypes.func.isRequired
 }
