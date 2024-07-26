@@ -27,6 +27,10 @@ export const apiFetch = async (endpoint, { method, headers, body } = {}) => {
 
   let data;
   if (!response.ok) {
+    if (token && response.status === 401) {
+      sessionStorage.removeItem(tokenKey);
+      window.location.reload();
+    }
     try {
       data = await response.json();
     } catch (error) {
