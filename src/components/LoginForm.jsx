@@ -1,7 +1,25 @@
 import { useState } from 'react'
 import { Input } from './Input';
 import { useAuth } from '../hooks/useAuth';
-
+import { css } from '@emotion/css';
+import { colors } from '../styles/colors';
+const styles = css`
+  display:flex;
+  flex-direction:column;
+  gap:2rem;
+  `
+const buttonStyles = css`
+  width:258px;
+  border-radius:1rem;
+  padding: 0.5rem 1rem;
+  background-color: ${colors.gray.medium};
+  font-weight: 700;
+  font-size: 0.875rem;
+  line-height: 1rem;
+  color: white;
+  border: transparent;
+  cursor: pointer;
+`
 export const LoginForm = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -20,7 +38,7 @@ export const LoginForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={styles} onSubmit={handleSubmit}>
       <Input
         label={'Email'}
         type="email"
@@ -39,7 +57,7 @@ export const LoginForm = () => {
         value={formData.password}
         onChange={handleChange}
       />
-      <button type="submit">Log In</button>
+      <button className={buttonStyles} type="submit">Log In</button>
     </form>
   )
 }

@@ -4,7 +4,10 @@ import PropTypes from 'prop-types'
 const style = css`
 width: 22.5rem;
 height: 50rem;
-background-color: ${colors.background}
+background-color: ${colors.background};
+display:flex;
+flex-direction:column;
+align-items:center;
 `
 export const Screen = ({ children }) => {
   return (
@@ -13,5 +16,5 @@ export const Screen = ({ children }) => {
 }
 
 Screen.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 }

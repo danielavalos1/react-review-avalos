@@ -1,17 +1,46 @@
 import { useState } from 'react';
 import { Input } from './Input';
 import { useAuth } from '../hooks/useAuth';
-export const SignUpForm = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    first_name: "",
-    last_name: "",
+import { css } from '@emotion/css';
+import { colors } from '../styles';
+import PropTypes from 'prop-types'
+
+const styles = css`
+  display:flex;
+  flex-direction:column;
+  gap:2rem;
+  `
+
+const buttonStyles = css`
+  width:258px;
+  border-radius:1rem;
+  padding: 0.5rem 1rem;
+  background-color: ${colors.gray.medium};
+  font-weight: 700;
+  font-size: 0.875rem;
+  line-height: 1rem;
+  color: white;
+  border: transparent;
+  cursor: pointer;
+`
+
+export const SignUpForm = ({ initialValues = null }) => {
+  const [formData, setFormData] = useState(() => {
+    return initialValues || {
+      email: "",
+      password: "",
+      first_name: "",
+      last_name: "",
+    }
   })
-  const { signup } = useAuth();
+  const { signup, update, state } = useAuth();
   const handleSubmit = (e) => {
     e.preventDefault();
-    signup(formData);
+    if (initialValues) {
+      update(formData);
+    } else {
+      signup(formData);
+    }
   }
 
   const handleChange = (e) => {
@@ -20,7 +49,7 @@ export const SignUpForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={styles} onSubmit={handleSubmit}>
       <Input
         label={'Email'}
         type="email"
@@ -55,7 +84,12 @@ export const SignUpForm = () => {
         onChange={handleChange}
         value={formData.last_name}
       />
-      <button type="submit">Create Account</button>
+      {state.status === 'pending' && 'loading...'}
+      <button className={buttonStyles} type="submit">{initialValues ? 'Update' : 'Create Account'}</button>
     </form>
   )
+}
+
+SignUpForm.propTypes = {
+  initialValues: PropTypes.object
 }
