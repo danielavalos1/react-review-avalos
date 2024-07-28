@@ -85,6 +85,7 @@ export const SignUpForm = ({ initialValues = null }) => {
         value={formData.last_name}
       />
       {state.status === 'pending' && 'loading...'}
+      {state.status === 'error' && state.error}
       <button className={buttonStyles} type="submit">{initialValues ? 'Update' : 'Create Account'}</button>
     </form>
   )

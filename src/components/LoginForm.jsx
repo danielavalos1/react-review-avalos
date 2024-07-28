@@ -25,7 +25,7 @@ export const LoginForm = () => {
     email: "",
     password: "",
   })
-  const { login } = useAuth();
+  const { login, state } = useAuth();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -57,6 +57,8 @@ export const LoginForm = () => {
         value={formData.password}
         onChange={handleChange}
       />
+      {state.status === 'loading' && 'Cargando...'}
+      {state.status === 'error' && state.error}
       <button className={buttonStyles} type="submit">Log In</button>
     </form>
   )

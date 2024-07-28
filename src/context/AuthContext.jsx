@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
       })
       .catch(error => {
         console.log(error);
-        setState({ ...state, status: 'error' });
+        setState({ ...state, status: 'error', error: null });
       });
   }, []);
 
@@ -41,14 +41,20 @@ export const AuthProvider = ({ children }) => {
       })
       .catch(error => {
         console.log(error);
-        setState({ ...state, status: 'error' });
+        setState({ ...state, status: 'error', error: 'Credenciales incorrectas' });
       });
   }
 
   const signup = (userData) => {
     createUser(userData)
-      .then(user => setUser(user))
-      .catch(error => console.log(error));
+      .then(user => {
+        setUser(user)
+        setState({ ...state, status: 'success' });
+      })
+      .catch(error => {
+        console.log(error);
+        setState({ ...state, status: 'error', error: 'Error al crear la cuenta' });
+      });
   }
 
   const update = (userData) => {
@@ -60,7 +66,7 @@ export const AuthProvider = ({ children }) => {
       })
       .catch(error => {
         console.log(error);
-        setState({ ...state, status: 'error' });
+        setState({ ...state, status: 'error', error: error });
       });
   }
 
@@ -72,7 +78,7 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
       })
       .catch(error => {
-        setState({ ...state, status: 'error' });
+        setState({ ...state, status: 'error', error: error });
         console.log(error)
       });
   }
