@@ -5,12 +5,12 @@ import { SearchPage } from "./pages/SearchPage"
 import { FavoritePage } from './pages/FavoritePage'
 import { createFavorite, getFavorites, removeFavorite } from "./services/favorites-services";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useAuth } from "./hooks/useAuth"
+import { Navbar } from "./components/Navbar"
+import { ProfilePage } from "./pages/ProfilePage"
 
 
 export const AuthenticatedApp = () => {
   const [favorites, setFavorites] = useState([]);
-  const { logout } = useAuth();
   const handleAddFavorite = (pokemon) => {
     const data = {
       pokemon_name: pokemon.name,
@@ -45,25 +45,33 @@ export const AuthenticatedApp = () => {
   return (
     <Layout>
       <Screen>
-        <button onClick={logout}>Log out</button>
+        {/* <button onClick={logout}>Log out</button> */}
         <BrowserRouter>
           <Routes>
-            <Route
-              path="/"
-              element={
-                <SearchPage
-                  favorites={favorites}
-                  onAddFavorite={handleAddFavorite}
-                  onRemoveFavorite={handleRemoveFavorite}
-                />
-              }
-            />
-            <Route
-              path="/favorites"
-              element={
-                <FavoritePage favorites={favorites} />
-              }
-            />
+            <Route element={<Navbar />}>
+              <Route
+                path="/"
+                element={
+                  <SearchPage
+                    favorites={favorites}
+                    onAddFavorite={handleAddFavorite}
+                    onRemoveFavorite={handleRemoveFavorite}
+                  />
+                }
+              />
+              <Route
+                path="/favorites"
+                element={
+                  <FavoritePage favorites={favorites} />
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <ProfilePage />
+                }
+              />
+            </Route>
           </Routes>
         </BrowserRouter>
       </Screen>

@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom';
+import { RiStarFill } from 'react-icons/ri';
+import { colors } from '../styles';
 
 const typeColors = {
   bug: "#A8B820",
@@ -22,42 +23,76 @@ const typeColors = {
   steel: "#B8B8D0",
   water: "#6890F0",
 };
-
+const formatId = (id) => {
+  id = String(id);
+  return id.length < 2 ? `#00${id}` : id.length < 3 ? `#0${id}` : `#${id}`;
+}
 const PokeCard = styled('div')`
-  border: 2px solid ${({ type }) => typeColors[type]};
-  border-radius: 10px;
-  padding: 1rem;
+  border: 1px solid ${({ type }) => typeColors[type]};
+  width:6.5rem;
+  border-radius: 0.5rem;
   display:flex;
   flex-direction:column;
-  gap: 1rem;
   align-items:center;
 `
 
 const Favorites = styled('div')`
   display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
-  padding: 1rem;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
 `
 
 const Wrapper = styled('div')`
   display:flex;
+  flex:1;
   flex-direction: column;
   gap:1rem;
+  overflow-y:auto;
 `
 
 export const FavoritePage = ({ favorites }) => {
   return (
     <Wrapper>
-      <h3>Favorites</h3>
-      <Link to='/'>Search</Link>
+      <h3 style={{
+        fontWeight: 700,
+        fontSize: '1.5rem',
+        lineHeight: '2rem',
+        textAlign: 'center',
+        marginTop: '22px'
+      }}>Favorites</h3>
       <Favorites>
-
         {
           favorites.map(pokeFav => (
-            <PokeCard key={pokeFav.id}>
-              <p>{pokeFav.pokemon_name}</p>
-              <img src={pokeFav.pokemon_avatar_url} alt={pokeFav.pokemon_name} />
+            <PokeCard type={pokeFav.pokemon_type} key={pokeFav.id}>
+              <header style={{
+                display: 'flex',
+                width: '100%',
+                padding: '0.25rem 0.5rem',
+                justifyContent: 'space-between'
+              }}>
+                <RiStarFill color={colors.yellow[500]} />
+                <span style={{
+                  fontWeight: 400,
+                  fontSize: '0.5rem',
+                  lineHeight: '0.75rem',
+                  color: typeColors[pokeFav.pokemon_type],
+                }}>{formatId(pokeFav.pokemon_id)}</span>
+              </header>
+              <img width={72} height={72} src={pokeFav.pokemon_avatar_url} alt={pokeFav.pokemon_name} />
+              <footer style={{
+                padding: '0.25rem 0.5rem',
+                backgroundColor: typeColors[pokeFav.pokemon_type],
+                width: '100%',
+                textAlign: 'center',
+                borderBottomRightRadius: '0.3rem',
+                borderBottomLeftRadius: '0.3rem',
+                color: 'white',
+                fontWeight: 400,
+                fontSize: '10px',
+                lineHeight: '1rem',
+                textTransform: 'capitalize'
+              }}>{pokeFav.pokemon_name}</footer>
             </PokeCard>
           ))
         }
